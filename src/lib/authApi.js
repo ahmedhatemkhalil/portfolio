@@ -1,26 +1,17 @@
-const DEFAULT_API = "http://localhost:5000";
-const API_PREFIX = "/api/";
-
-export function getApiBaseUrl() {
-  return (
-    (typeof process !== "undefined" && process.env.NEXT_PUBLIC_API_URL) ||
-    DEFAULT_API
-  ).replace(/\/$/, "");
+/** Same-origin `/api/*` Route Handlers (no separate Express server in production). */
+function serverOrigin() {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (site) return site;
+  return "http://localhost:3000";
 }
 
-/**
- * In the browser, call the Next.js BFF proxy (same origin) so requests are not
- * blocked by CORS or odd localhost/IPv6 mismatches. The proxy forwards to the Express API.
- */
 function resolveRequestUrl(apiPath) {
+  const path = apiPath.startsWith("/") ? apiPath : `/${apiPath}`;
   if (typeof window !== "undefined") {
-    if (apiPath.startsWith(API_PREFIX)) {
-      const rest = apiPath.slice(API_PREFIX.length);
-      return { url: `${window.location.origin}/api/proxy/${rest}` };
-    }
-    return { url: apiPath };
+    return { url: `${window.location.origin}${path}` };
   }
-  return { url: `${getApiBaseUrl()}${apiPath}` };
+  return { url: `${serverOrigin()}${path}` };
 }
 
 const TOKEN_KEY = "auth_token";
@@ -75,7 +66,7 @@ export async function authFetch(path, init = {}) {
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
     throw new Error(
-      `Request failed (${reason}). If the API runs separately, ensure the Next dev server is up and try again.`,
+      `Request failed (${reason}). Ensure the Next.js app is running and try again.`,
     );
   }
 

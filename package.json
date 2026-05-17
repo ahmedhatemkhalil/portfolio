@@ -8,9 +8,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "backend:dev": "npm run dev --prefix backend"
+    "backend:dev": "npm run dev --prefix backend",
+    "backend:start": "npm run start --prefix backend"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
