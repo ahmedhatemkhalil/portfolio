@@ -1,65 +1,73 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="space-y-10">
+      <section className="relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white p-8 shadow-sm dark:border-zinc-800/90 dark:bg-zinc-900/60 sm:p-10">
+        <div
+          className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-indigo-400/15 blur-3xl dark:bg-indigo-500/10"
+          aria-hidden
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+        <div className="relative max-w-2xl space-y-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">
+            Next.js routing
           </p>
+          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
+            Welcome to my portfolio
+          </h1>
+          <p className="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+            A compact demo of static and dynamic routes, nested segments, data
+            fetching patterns, and auth — structured like a real product surface.
+          </p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Link className="btn" href="/portfolio">
+              Explore projects
+            </Link>
+            <Link className="btn btn-secondary" href="/fake-api">
+              Fake API lab
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      <section className="grid gap-4 sm:grid-cols-3">
+        {[
+          {
+            title: "Projects",
+            desc: "Static params & detail routes.",
+            href: "/portfolio",
+          },
+          {
+            title: "Categories",
+            desc: "Nested dynamic segments.",
+            href: "/portfolio/categories",
+          },
+          {
+            title: "Rendering",
+            desc: "SSR, SSG, ISR & client data.",
+            href: "/fake-api",
+          },
+        ].map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group rounded-2xl border border-zinc-200/90 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md dark:border-zinc-800/90 dark:bg-zinc-900/50 dark:hover:border-indigo-900/60"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <h2 className="font-semibold text-zinc-900 group-hover:text-indigo-600 dark:text-white dark:group-hover:text-indigo-400">
+              {item.title}
+            </h2>
+            <p className="mt-2 text-sm leading-snug text-zinc-600 dark:text-zinc-400">
+              {item.desc}
+            </p>
+            <span className="mt-4 inline-flex items-center text-sm font-semibold text-indigo-600 dark:text-indigo-400">
+              Open
+              <span className="ml-1 transition group-hover:translate-x-0.5" aria-hidden>
+                →
+              </span>
+            </span>
+          </Link>
+        ))}
+      </section>
     </div>
   );
 }
