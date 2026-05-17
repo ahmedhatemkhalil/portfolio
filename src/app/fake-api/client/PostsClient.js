@@ -5,7 +5,7 @@ import { fetchPosts } from "@/lib/fakeApi";
 
 export default function PostsClient() {
   const { data: posts, error, isLoading } = useSWR("posts", () => fetchPosts(8));
-
+ console.log(posts);
   if (isLoading) {
     return (
       <div className="flex items-center gap-3 rounded-xl border border-zinc-200/90 bg-zinc-50/80 px-4 py-8 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-zinc-400">
